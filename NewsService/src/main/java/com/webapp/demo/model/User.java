@@ -21,6 +21,9 @@ public class User {
     private String userName;
     private String userRole;
 
+    @OneToMany(mappedBy = "user")
+    Set<NewsReadByUser> readNews;
+
     public Set<NewsReadByUser> getReadNews() {
         return readNews;
     }
@@ -28,9 +31,6 @@ public class User {
     public void setReadNews(Set<NewsReadByUser> readNews) {
         this.readNews = readNews;
     }
-
-    @OneToMany(mappedBy = "user")
-    Set<NewsReadByUser> readNews;
 
     public long getUserId() {
         return userId;

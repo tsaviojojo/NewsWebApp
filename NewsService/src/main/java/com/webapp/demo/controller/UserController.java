@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    void addUser(User user) {
+    void addUser(@RequestBody User user) {
         userRepository.save(user);
     }
 }

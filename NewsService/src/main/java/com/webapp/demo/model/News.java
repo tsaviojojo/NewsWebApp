@@ -12,7 +12,7 @@ public class News {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "newIdSeq")
     private long newsId;
     private String newsTitle;
-    private String newsText;
+    private String newsContent;
 
     @OneToMany(mappedBy = "news")
     Set<NewsReadByUser> readNews;
@@ -33,14 +33,6 @@ public class News {
         this.readNews = readNews;
     }
 
-    public long getNewsID() {
-        return newsId;
-    }
-
-    public void setNewsID(long newsID) {
-        this.newsId = newsId;
-    }
-
     public String getNewsTitle() {
         return newsTitle;
     }
@@ -49,12 +41,12 @@ public class News {
         this.newsTitle = newsTitle;
     }
 
-    public String getNewsText() {
-        return newsText;
+    public String getNewsContent() {
+        return newsContent;
     }
 
-    public void setNewsText(String newsText) {
-        this.newsText = newsText;
+    public void setNewsContent(String newsContent) {
+        this.newsContent = newsContent;
     }
 
 }
