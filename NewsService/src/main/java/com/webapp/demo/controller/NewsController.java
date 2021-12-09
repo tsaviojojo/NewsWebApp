@@ -32,9 +32,6 @@ public class NewsController {
 
     @PutMapping("/news/{newsId}")
     void updateNews(@PathVariable("newsId") long newsId,@RequestBody News news) {
-        System.out.println(newsId);
-        System.out.println(news.getNewsTitle());
-        System.out.println(news.getNewsContent());
         newsRepository.findById(newsId)
                 .map(tempNews -> {
                     tempNews.setNewsTitle(news.getNewsTitle());

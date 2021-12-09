@@ -36,4 +36,26 @@ export class ApiService {
       return res;
     }))
   }
+
+  postUser(data : any){
+    return this.http.post<any>("http://localhost:8080/user", data)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
+  getAllUsers(){
+    return this.http.get<any>("http://localhost:8080/user")
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
+  updateUser(data : any, id:number){
+    return this.http.put<any>("http://localhost:8080/user/"+id, data)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
 }

@@ -9,13 +9,6 @@
   background: linear-gradient(-135deg, #c850c0, #4158d0);
 }
 
-.wrap-login100 {
-  background: #fff;
-  border-radius: 10px;
-  margin-right: 5px;
-  justify-content: space-between;
-}
-
 .container-login100 {
     width: 100%;  
     min-height: 100vh;

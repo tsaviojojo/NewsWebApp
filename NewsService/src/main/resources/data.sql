@@ -1,5 +1,5 @@
-insert into user values (1, 'savio', 'admin')
-insert into user values (2, 'ami', 'reader')
+insert into user (user_id, user_name, user_role, user_password) values (1, 'savio', 'Admin', '1234')
+insert into user (user_id, user_name, user_role, user_password) values (2, 'ami', 'Reader', '1235')
 
 insert into news (news_id, news_title, news_content) values (101, 'Covid updates', 'all updates of covid.....')
 insert into news (news_id, news_title, news_content) values (102, 'Study updates', 'all updates of Study.....')

@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-pic js-tilt" data-tilt>
+                <img src="assets/images/img-01.png" alt="IMG">
+            </div>
+
+            <form class="login100-form validate-form"  [formGroup]="signupForm" (ngSubmit)="signUp()">
+                <span class="login100-form-title" style="font-family:Arial, Helvetica, sans-serif">
+                    Member Signup
+                </span>
+
+                <div class="wrap-input100">
+                    <input formControlName="userName" class="input100" type="text" name="email" placeholder="User Name" required="required">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate = "Password is required">
+                    <input formControlName="userPassword" class="input100" type="password" name="pass" placeholder="Password">
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <select formControlName="userRole" id="selectRole" class="input100 form-select" required>
+                        <option selected disabled value="" style="color:#999999">Select a role</option>
+                        <option>Reader</option>
+                        <option>Publisher</option>
+                        <option>Admin</option>
+                    </select>
+                    <div class="invalid-tooltip">
+                        Please select a valid role.
+                    </div>
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                        <i class="fa fa-group" aria-hidden="true"></i>
+                    </span>
+                </div>
+                
+                <div class="container-login100-form-btn">
+                    <button type="submit" class="login100-form-btn">
+                        Signup
+                    </button>
+                </div>
+
+                <div class="text-center p-t-136">
+                    <a class="txt2" routerLink="/login">
+                        Already a user ? Click to login
+                        <i class="fa fa-external-link m-l-5" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

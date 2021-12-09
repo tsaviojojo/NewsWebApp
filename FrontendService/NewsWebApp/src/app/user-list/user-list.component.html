@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="mySidebar" class="sidebar">
+    <a class="closebtn" (click)="closeNav()">×</a>
+    <button routerLink="/dashboard" class="btn login100-menu-btn"><i class="fa fa-sign-out"></i>Dashboard</button>
+    <button routerLink="/login" class="btn login100-menu-btn"><i class="fa fa-sign-out"></i>Logout</button>
+</div>
+
+<div class="background">
+    <div id="main">
+        <div class="row">
+            <button class="openbtn login100-btn" (click)="openNav()">☰ Menu</button>  
+            <h1 style="color: white;">Online News portal</h1>
+        </div>
+    </div>
+
+    <div class="card" *ngFor="let row of userData" style="margin:50px">
+        <div class="card-header">
+             User Id: {{row.userId}}
+        </div>
+        <div class="card-body">
+            <p class="card-text"><i style="font-family: Bold;">User Name:</i> {{row.userName}}</p>
+            <p class="card-text"><i style="font-family: Bold;">User Role:</i> {{row.userRole}}</p>
+            <button (click)="onEditUser(row)" style="margin:5px;" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn"><i class="fa fa-edit"></i> Edit</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Update user</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup] ="formValue">
+                <div class="form-group">
+                    <label for="userName">User Name :</label>
+                    <p>{{this.formValue.value.userName}}</p>
+                  </div>
+                <div class="form-group">
+                  <label for="userRole" style="margin-right: 20px;">User Role</label>
+                  <select formControlName="userRole" id="selectRole" class="input100 form-select" required>
+                    <option selected disabled value="" style="color:#999999">Select a role</option>
+                    <option>Reader</option>
+                    <option>Publisher</option>
+                    <option>Admin</option>
+                </select>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="userCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" (click)="updateUser()" class="btn btn-primary">Update User</button>
+        </div>
+        </div>
+    </div>
+    </div>

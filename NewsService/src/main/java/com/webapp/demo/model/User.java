@@ -20,6 +20,15 @@ public class User {
     private long userId;
     private String userName;
     private String userRole;
+    private String userPassword;
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
 
     @OneToMany(mappedBy = "user")
     Set<NewsReadByUser> readNews;

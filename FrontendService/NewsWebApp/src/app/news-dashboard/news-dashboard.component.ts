@@ -1,7 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../service/api.service';
-import { NewsModel } from './news-dashboard.model';
+import { NewsModel } from '../model/news-dashboard.model';
+import { UserRoleService } from '../service/user-role.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-dashboard',
@@ -12,20 +14,38 @@ export class NewsDashboardComponent implements OnInit {
 
   newsId !: number;
   formValue !: FormGroup;
+
   newsModelObj : NewsModel = new NewsModel();
   newsData !: any;
+
   showAdd !: boolean;
   showUpdate !:boolean;
 
+  showNewsEditButton : boolean = true;
+  showNewsDeleteButton : boolean = true;
+  showNewsAddButton : boolean = true;
+
   constructor(private formbuilder: FormBuilder,
-    private api: ApiService) {
+    private api: ApiService,
+    private userRole: UserRoleService,
+    private router:Router,) {
   }
 
   ngOnInit(): void {
+    if(this.userRole.getUserRole().length === 0) {
+      alert("Please login to access News Dashboard")
+      this.router.navigate(['login'])
+    }
     this.formValue = this.formbuilder.group({
       newsTitle : [''],
       newsContent : ['']
     })
+
+    if(this.userRole.getUserRole() === "Reader"){
+      this.showNewsEditButton = false;
+      this.showNewsDeleteButton = false;
+      this.showNewsAddButton = false;
+    }
 
     this.getAllNews();
   }
@@ -87,4 +107,23 @@ export class NewsDashboardComponent implements OnInit {
     this.showAdd = true;
     this.showUpdate = false;
   }
+
+  openNav() {
+    let ref : any =  document.getElementById('mySidebar');
+    ref.style.width = "250px";
+    let ref1 : any =  document.getElementById('main')
+    ref1.style.marginLeft = "250px";
+  }
+
+  closeNav() {
+    let ref : any = document.getElementById("mySidebar");
+    ref.style.width = "0";
+    let ref1 : any =  document.getElementById("main");
+    ref1.style.marginLeft= "0";
+  }
+
+  modifyUser(){
+    this.router.navigate(['userList'])
+  }
+
 }
