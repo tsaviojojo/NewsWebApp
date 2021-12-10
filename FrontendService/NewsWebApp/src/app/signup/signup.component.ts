@@ -12,6 +12,7 @@ import { ApiService } from '../service/api.service';
 export class SignupComponent implements OnInit {
 
   public signupForm !: FormGroup;
+  roleData !: any;
 
   userModelObg : UserModel = new UserModel();
   userData !: any;
@@ -25,6 +26,14 @@ export class SignupComponent implements OnInit {
       userName:[''],
       userRole:[''],
       userPassword:['']
+    })
+    this.getRole();
+  }
+
+  getRole(){
+    this.api.getRoles()
+    .subscribe(res=>{
+      this.roleData = res;
     })
   }
 

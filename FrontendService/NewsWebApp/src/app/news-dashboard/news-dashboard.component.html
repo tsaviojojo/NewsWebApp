@@ -86,21 +86,51 @@
             </button>
         </div>
         <div class="modal-body">
-            <form [formGroup] ="formValue">
+            <form [formGroup]="roleForm">
                 <div class="form-group">
-                    <label for="newsTitle">News Title</label>
-                    <input type="text" formControlName="newsTitle" class="form-control" id="newsTitle" placeholder="Example input">
+                    <label for="newsTitle">New Role Title</label>
+                    <input type="text" formControlName="roleTitle" class="form-control" id="newsTitle" placeholder="Spaces are not allowed">
                   </div>
-                <div class="form-group">
-                  <label for="newsContent">News Content</label>
-                  <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3"></textarea>
-                </div>
+                  <div class="form-group row">
+                    <div class="col-sm-10">Permitted Actions</div>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toReadNews" id="toReadNews">
+                        <label class="form-check-label" for="toReadNews">
+                          Read News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toCreateNews" id="toCreateNews">
+                        <label class="form-check-label" for="toCreateNews">
+                          Create News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toEditNews" id="toEditNews">
+                        <label class="form-check-label" for="toEditNews">
+                          Edit News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toEditownNews" id="toEditownNews">
+                        <label class="form-check-label" for="toEditownNews">
+                          Edit own News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toDeleteNews" id="toDeleteNews">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Delete News
+                        </label>
+                      </div>
+                    </div>
+                  </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" id="newsCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" *ngIf="showAdd" (click)="postNews()" class="btn btn-primary">Publish News</button>
-            <button type="button" *ngIf="showUpdate" (click)="updateNews()" class="btn btn-primary">Update News</button>
+            <button type="button" id="rolesCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" (click)="addRole()" class="btn btn-primary">Add Role</button>
         </div>
         </div>
     </div>

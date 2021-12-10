@@ -4,6 +4,8 @@ import { ApiService } from '../service/api.service';
 import { NewsModel } from '../model/news-dashboard.model';
 import { UserRoleService } from '../service/user-role.service';
 import { Router } from '@angular/router';
+import { roles } from '../model/roles.model';
+import { asLiteral } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-news-dashboard',
@@ -14,12 +16,16 @@ export class NewsDashboardComponent implements OnInit {
 
   newsId !: number;
   formValue !: FormGroup;
+  roleForm !: FormGroup;
 
   newsModelObj : NewsModel = new NewsModel();
+  roleModelObj : roles = new roles();
   newsData !: any;
+  public roleData !: roles;
 
   showAdd !: boolean;
   showUpdate !:boolean;
+  canAddToTable : boolean = true;
 
   showNewsEditButton : boolean = true;
   showNewsDeleteButton : boolean = true;
@@ -41,7 +47,16 @@ export class NewsDashboardComponent implements OnInit {
       newsContent : ['']
     })
 
-    if(this.userRole.getUserRole() === "Reader"){
+    this.roleForm = this.formbuilder.group({
+      roleTitle : [''],
+      toReadNews : false,
+      toCreateNews : false,
+      toEditNews : false,
+      toEditownNews : false,
+      toDeleteNews : false
+    })
+
+    if(this.userRole.getUserRole() === "READER"){
       this.showNewsEditButton = false;
       this.showNewsDeleteButton = false;
       this.showNewsAddButton = false;
@@ -124,6 +139,38 @@ export class NewsDashboardComponent implements OnInit {
 
   modifyUser(){
     this.router.navigate(['userList'])
+  }
+
+  addRole(){
+    let roleTitleString : string = this.roleForm.value.roleTitle;
+
+    this.roleModelObj.roleTitle = roleTitleString.replace(/\s/g, "").toUpperCase();
+    this.roleModelObj.viewNews = this.roleForm.value.toReadNews;
+    this.roleModelObj.createNews  = this.roleForm.value.toCreateNews;
+    this.roleModelObj.updateNews  = this.roleForm.value.toEditNews;
+    this.roleModelObj.onlyUpdateOwnNews  = this.roleForm.value.toEditownNews;
+    this.roleModelObj.deleteNews  = this.roleForm.value.toDeleteNews;
+
+    this.api.getRoles()
+    .subscribe(res=>{
+      const role = res.find((a:any)=>{
+        return a.roleTitle === roleTitleString.replace(/\s/g, "").toUpperCase()
+      });
+      if (role) {
+        alert("Role with same title exists. Choose another Title") 
+        this.roleForm.reset();
+      } else {
+        this.api.postRoles(this.roleModelObj)
+        .subscribe(res =>{
+          alert("Role added successfully") 
+          let ref = document.getElementById('rolesCancelButton')
+          ref?.click();
+          this.roleForm.reset();
+          this.getAllNews();
+        })
+      }
+    })
+
   }
 
 }

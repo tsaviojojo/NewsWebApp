@@ -33,12 +33,10 @@
                         <i class="fa fa-lock" aria-hidden="true"></i>
                     </span>
                 </div>
-                <div class="wrap-input100 validate-input">
+                <div class="wrap-input100 validate-input" >
                     <select formControlName="userRole" id="selectRole" class="input100 form-select" required>
                         <option selected disabled value="" style="color:#999999">Select a role</option>
-                        <option>Reader</option>
-                        <option>Publisher</option>
-                        <option>Admin</option>
+                        <option *ngFor="let row of roleData">{{row.roleTitle}}</option>
                     </select>
                     <div class="invalid-tooltip">
                         Please select a valid role.

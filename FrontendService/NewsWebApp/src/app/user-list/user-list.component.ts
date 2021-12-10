@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserModel } from '../model/UserModel.model';
 import { ApiService } from '../service/api.service';
+import { UserRoleService } from '../service/user-role.service';
 
 @Component({
   selector: 'app-user-list',
@@ -14,14 +15,20 @@ export class UserListComponent implements OnInit {
   userId !: number;
   userModelObj : UserModel = new UserModel();
   userData !: any;
+  roleData !: any;
 
   formValue !: FormGroup;
 
   constructor(private formbuilder : FormBuilder, 
     private api: ApiService,
+    private userRole: UserRoleService,
     private router:Router) { }
 
   ngOnInit(): void {
+    if(this.userRole.getUserRole().length === 0) {
+      alert("Please login as admin to access Users List")
+      this.router.navigate(['login'])
+    }
 
     this.formValue = this.formbuilder.group({
       userName : [''],
@@ -29,6 +36,13 @@ export class UserListComponent implements OnInit {
     })
 
     this.getAllUser();
+  }
+
+  getRole(){
+    this.api.getRoles()
+    .subscribe(res=>{
+      this.roleData = res;
+    })
   }
 
   getAllUser() {
@@ -42,6 +56,7 @@ export class UserListComponent implements OnInit {
     this.userId = row.userId;
     this.formValue.controls['userName'].setValue(row.userName);
     this.formValue.controls['userRole'].setValue(row.userRole);
+    this.getRole();
   }
 
   updateUser() {

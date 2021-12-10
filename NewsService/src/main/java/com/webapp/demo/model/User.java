@@ -4,12 +4,6 @@ package com.webapp.demo.model;
 import javax.persistence.*;
 import java.util.Set;
 
-enum Roles {
-    ADMIN,
-    READER,
-    PUBLISHER
-}
-
 @Entity
 // The 1st two are already inserted into the table using data.sql
 @SequenceGenerator(name="userIdSeq", initialValue = 3)

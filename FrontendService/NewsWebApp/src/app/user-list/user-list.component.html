@@ -46,9 +46,7 @@
                   <label for="userRole" style="margin-right: 20px;">User Role</label>
                   <select formControlName="userRole" id="selectRole" class="input100 form-select" required>
                     <option selected disabled value="" style="color:#999999">Select a role</option>
-                    <option>Reader</option>
-                    <option>Publisher</option>
-                    <option>Admin</option>
+                    <option *ngFor="let row of roleData">{{row.roleTitle}}</option>
                 </select>
                 </div>
             </form>
