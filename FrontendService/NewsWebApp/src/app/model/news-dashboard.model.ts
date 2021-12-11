@@ -4,7 +4,7 @@ export class NewsModel {
     newsAuthor : string = '';
     newsImage ?: File;
     newsPublished : Date | undefined;
-    newsValidFrom : Date | undefined;
-    newsValidTo : Date | undefined;
+    newsValidFrom : any ;
+    newsValidTo : any;
     newsSavedAsDraft : boolean = false;
 }

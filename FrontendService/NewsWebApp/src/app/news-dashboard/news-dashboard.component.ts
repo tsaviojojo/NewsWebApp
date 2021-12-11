@@ -6,6 +6,7 @@ import { UserRoleService } from '../service/user-role.service';
 import { Router } from '@angular/router';
 import { roles } from '../model/roles.model';
 import { asLiteral } from '@angular/compiler/src/render3/view/util';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-news-dashboard',
@@ -17,11 +18,13 @@ export class NewsDashboardComponent implements OnInit {
   newsId !: number;
   formValue !: FormGroup;
   roleForm !: FormGroup;
+  formValueNewsView !: FormGroup;
 
   newsModelObj : NewsModel = new NewsModel();
   roleModelObj : roles = new roles();
   newsData !: any;
   public roleData !: roles;
+  newsView !: NewsModel;
 
   showAdd !: boolean;
   showUpdate !:boolean;
@@ -37,7 +40,8 @@ export class NewsDashboardComponent implements OnInit {
   constructor(private formbuilder: FormBuilder,
     private api: ApiService,
     private userRole: UserRoleService,
-    private router:Router,) {
+    private router:Router,
+    public datepipe: DatePipe) {
   }
 
   ngOnInit(): void {
@@ -46,6 +50,15 @@ export class NewsDashboardComponent implements OnInit {
       this.router.navigate(['login'])
     }
     this.formValue = this.formbuilder.group({
+      newsTitle : [''],
+      newsImage : [''],
+      newsContent : [''],
+      newsPublished : [''],
+      newsValidFrom : [''],
+      newsValidTo : [''],
+    })
+
+    this.formValueNewsView = this.formbuilder.group({
       newsTitle : [''],
       newsImage : [''],
       newsContent : [''],
@@ -186,6 +199,21 @@ export class NewsDashboardComponent implements OnInit {
     this.newsId = row.newsId;
     this.formValue.controls['newsTitle'].setValue(row.newsTitle);
     this.formValue.controls['newsContent'].setValue(row.newsContent);
+    this.formValue.controls['newsValidFrom'].setValue(this.datepipe.transform(row.newsValidFrom, 'yyyy-MM-dd'));
+    this.formValue.controls['newsValidTo'].setValue(this.datepipe.transform(row.newsValidTo, 'yyyy-MM-dd'));
+  }
+
+  onViewNews(row : any){
+    this.newsView = row;
+    this.newsId = row.newsId;
+    this.formValueNewsView.controls['newsTitle'].setValue(row.newsTitle);
+    this.formValueNewsView.controls['newsContent'].setValue(row.newsContent);
+    this.api.postNewsRead(row, this.userRole.getUserName())
+    .subscribe(res =>{
+      let ref = document.getElementById('newsCancelButton')
+      ref?.click();
+      this.getAllNews();
+    })
   }
 
   updateNews(){

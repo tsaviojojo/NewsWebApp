@@ -38,6 +38,13 @@ export class UserListComponent implements OnInit {
     this.getAllUser();
   }
 
+  navigateToDashboard(){
+    this.router.navigate(['/dashboard'])
+    .then(() => {
+      this.ngOnInit();
+    });
+  }
+
   getRole(){
     this.api.getRoles()
     .subscribe(res=>{

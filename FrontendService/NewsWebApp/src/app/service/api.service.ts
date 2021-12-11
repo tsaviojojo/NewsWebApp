@@ -38,6 +38,13 @@ export class ApiService {
     }))
   }
 
+  postNewsRead(data : any, userName : string){
+    return this.http.post<any>("http://localhost:8080/newsRead/"+userName, data)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
   getNews(){
     return this.http.get<any>("http://localhost:8080/news")
     .pipe(map((res:any)=>{

@@ -25,12 +25,13 @@
                     <div class="card-body">
                         <h5 class="card-title">Title: {{row.newsTitle}}</h5>
                         <p class="card-text">Content: {{row.newsContent}}</p>
+                        <small class="text-muted">(Published date)</small>
                         <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">                                 
+                            <div class="btn-group">   
+                                <button (click)="onViewNews(row)" style="margin:5px;" type="button" data-toggle="modal" data-target="#newsViewModalCenter" class="btn"><i class="fa fa-caret-square-o-right"></i> View</button>                              
                                 <button (click)="onEditNews(row)" *ngIf="showNewsEdit(row)" style="margin:5px;" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn"><i class="fa fa-edit"></i> Edit</button>
                                 <button (click)="deleteNews(row)" *ngIf="showNewsDelete(row)" style="margin:5px;" class="btn"><i class="fa fa-trash"></i> Delete</button>
                             </div>
-                        <small class="text-muted">(Published date)</small>
                         </div>
                     </div>
 
@@ -41,6 +42,37 @@
 </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="newsViewModalCenter" tabindex="-1" role="dialog" aria-labelledby="newsViewModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 1000px;">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="newsViewModalCenterTitle">News Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup] ="formValueNewsView">
+            <fieldset disabled>
+              <div class="form-group">
+                  <label for="newsTitle">News Title:</label>
+                  <input type="text" formControlName="newsTitle" class="form-control" id="newsTitle" placeholder="Example input">
+              </div>
+              <div class="form-group">
+                <label for="newsContent">News Content</label>
+                <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3"></textarea>
+              </div>
+              
+            </fieldset>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" id="newsViewCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+  </div>
+  </div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -59,8 +91,8 @@
                 <input type="text" formControlName="newsTitle" class="form-control" id="newsTitle" placeholder="Example input">
             </div>
             <div class="form-group">
-              <label for="newsTitle">News image</label>
-              <input type="file" accept="image/*" formControlName="newsImage" class="form-control" id="newsTitle" placeholder="Example input">
+              <label for="newsContent">News Content</label>
+              <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3"></textarea>
             </div>
             <div class="form-group">
               <label for="newsTitle">News Valid From</label>
@@ -71,8 +103,8 @@
               <input type="date" formControlName="newsValidTo" class="form-control" id="newsValidTo" placeholder="Example input">
             </div>
             <div class="form-group">
-              <label for="newsContent">News Content</label>
-              <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3"></textarea>
+              <label for="newsTitle">News image</label>
+              <input type="file" accept="image/*" formControlName="newsImage" class="form-control" id="newsTitle" placeholder="Example input">
             </div>
         </form>
     </div>
