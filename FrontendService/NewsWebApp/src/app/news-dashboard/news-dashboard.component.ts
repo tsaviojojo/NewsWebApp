@@ -27,11 +27,12 @@ export class NewsDashboardComponent implements OnInit {
   showUpdate !:boolean;
   canAddToTable : boolean = true;
 
-  showNewsEditButton : boolean = true;
-  showNewsDeleteButton : boolean = true;
-  showNewsAddButton : boolean = true;
-  showAddRoleButton : boolean = false;
-  showModifyUserButton : boolean = false;
+  showNewsCard !: boolean;
+  showNewsEditButton !: boolean;
+  showNewsDeleteButton !: boolean;
+  showNewsAddButton !: boolean;
+  showAddRoleButton !: boolean;
+  showModifyUserButton !: boolean;
 
   constructor(private formbuilder: FormBuilder,
     private api: ApiService,
@@ -62,27 +63,69 @@ export class NewsDashboardComponent implements OnInit {
       toDeleteNews : false
     })
 
-    if(this.userRole.getUserRole().roleTitle === 'ADMIN'){
+    if(this.userRole.getUserRole().addNewRoles){
       this.showAddRoleButton = true;
-      this.showModifyUserButton = true;
+    } else {
+      this.showAddRoleButton = false;
     }
 
-    if(!this.userRole.getUserRole().createNews){
+    if(this.userRole.getUserRole().modifyUser){
+      this.showModifyUserButton = true;
+    } else {
+      this.showModifyUserButton = false;
+    }
+
+    if(this.userRole.getUserRole().createNews){
+      this.showNewsAddButton = true;
+    } else {
       this.showNewsAddButton = false;
     }
 
-    if(!this.userRole.getUserRole().updateNews){
-      this.showNewsEditButton = false;
-    }
+    this.getAllNews();
 
-    if(!this.userRole.getUserRole().deleteNews){
-      this.showNewsDeleteButton = false;
-    }
-
-    if(this.userRole.getUserRole().viewNews){
-      this.getAllNews();
-    }
     
+  }
+
+  showNews(row : NewsModel){
+    if(row.newsSavedAsDraft) {
+      if(row.newsAuthor === this.userRole.userName) {
+        return this.showNewsCard = true;
+      }
+      if(this.userRole.getUserRole().addNewRoles &&
+      this.userRole.getUserRole().modifyUser &&
+      this.userRole.getUserRole().createNews &&
+      this.userRole.getUserRole().deleteNews &&
+      this.userRole.getUserRole().updateNews) {
+        return this.showNewsCard = true;
+      }
+
+      return this.showNewsCard = false;
+    }
+    return this.showNewsCard = true;
+  }
+
+  showNewsEdit(row : NewsModel){
+    if(this.userRole.getUserRole().updateNews){
+      return this.showNewsEditButton = true;
+    }
+    if(this.userRole.getUserRole().onlyUpdateOwnNews){
+      if(row.newsAuthor === this.userRole.userName){
+        return this.showNewsEditButton = true;
+      }
+    }
+    return this.showNewsEditButton = false;
+  }
+
+  showNewsDelete(row : NewsModel){
+    if(this.userRole.getUserRole().deleteNews){
+      return this.showNewsDeleteButton = true;
+    }
+    if(this.userRole.getUserRole().deleteOwnNews){
+      if(row.newsAuthor === this.userRole.userName){
+        return this.showNewsDeleteButton = true;
+      }
+    }
+    return this.showNewsDeleteButton = false;
   }
 
   postNews(){
@@ -108,7 +151,7 @@ export class NewsDashboardComponent implements OnInit {
     this.newsModelObj.newsContent = this.formValue.value.newsContent;
     this.newsModelObj.newsValidFrom = this.formValue.value.newsValidFrom;
     this.newsModelObj.newsValidTo = this.formValue.value.newsValidTo;
-    this.newsModelObj.newsAuthor = this.userRole.getUserRole().roleTitle;
+    this.newsModelObj.newsAuthor = this.userRole.getUserName();
     this.newsModelObj.newsSavedAsDraft = true;
 
     this.api.postNews(this.newsModelObj)
@@ -150,7 +193,7 @@ export class NewsDashboardComponent implements OnInit {
     this.newsModelObj.newsContent = this.formValue.value.newsContent;
     this.newsModelObj.newsValidFrom = this.formValue.value.newsValidFrom;
     this.newsModelObj.newsValidTo = this.formValue.value.newsValidTo;
-    this.newsModelObj.newsAuthor = this.userRole.getUserRole().roleTitle;
+    this.newsModelObj.newsAuthor = this.userRole.getUserName();
     this.newsModelObj.newsSavedAsDraft = false;
 
     this.api.updateNews(this.newsModelObj, this.newsId)
@@ -191,11 +234,13 @@ export class NewsDashboardComponent implements OnInit {
     let roleTitleString : string = this.roleForm.value.roleTitle;
 
     this.roleModelObj.roleTitle = roleTitleString.replace(/\s/g, "").toUpperCase();
-    this.roleModelObj.viewNews = this.roleForm.value.toReadNews;
     this.roleModelObj.createNews  = this.roleForm.value.toCreateNews;
     this.roleModelObj.updateNews  = this.roleForm.value.toEditNews;
     this.roleModelObj.onlyUpdateOwnNews  = this.roleForm.value.toEditownNews;
     this.roleModelObj.deleteNews  = this.roleForm.value.toDeleteNews;
+    this.roleModelObj.deleteOwnNews  = this.roleForm.value.toDeleteownNews;
+    this.roleModelObj.modifyUser  = this.roleForm.value.toModifyUser;
+    this.roleModelObj.addNewRoles  = this.roleForm.value.toAddNewRoles;
 
     this.api.getRoles()
     .subscribe(res=>{

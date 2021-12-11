@@ -19,7 +19,7 @@
             
             <div class="col-md-4" *ngFor="let row of newsData" style="margin-bottom:35px; margin-top: 35px;">
 
-                <div class="card shadow-sm">
+                <div class="card shadow-sm" *ngIf="showNews(row)">
                     <img src="assets/images/img-01.png" alt="This news Does not have an image" height="225" preserveAspectRatio="xMidYMid slice" focusable="false">
 
                     <div class="card-body">
@@ -27,8 +27,8 @@
                         <p class="card-text">Content: {{row.newsContent}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">                                 
-                                <button (click)="onEditNews(row)" *ngIf="showNewsEditButton" style="margin:5px;" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn"><i class="fa fa-edit"></i> Edit</button>
-                                <button (click)="deleteNews(row)" *ngIf="showNewsDeleteButton" style="margin:5px;" class="btn"><i class="fa fa-trash"></i> Delete</button>
+                                <button (click)="onEditNews(row)" *ngIf="showNewsEdit(row)" style="margin:5px;" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn"><i class="fa fa-edit"></i> Edit</button>
+                                <button (click)="deleteNews(row)" *ngIf="showNewsDelete(row)" style="margin:5px;" class="btn"><i class="fa fa-trash"></i> Delete</button>
                             </div>
                         <small class="text-muted">(Published date)</small>
                         </div>
@@ -100,17 +100,11 @@
             <form [formGroup]="roleForm">
                 <div class="form-group">
                     <label for="newsTitle">New Role Title</label>
-                    <input type="text" formControlName="roleTitle" class="form-control" id="newsTitle" placeholder="Spaces are not allowed">
+                    <input type="text" formControlName="roleTitle" class="form-control" id="newsTitle" placeholder="Spaces are not allowed.Will be ommited if added">
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-10">Permitted Actions</div>
                     <div class="col-sm-10">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" formControlName="toReadNews" id="toReadNews">
-                        <label class="form-check-label" for="toReadNews">
-                          Read News
-                        </label>
-                      </div>
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" formControlName="toCreateNews" id="toCreateNews">
                         <label class="form-check-label" for="toCreateNews">
@@ -120,7 +114,7 @@
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" formControlName="toEditNews" id="toEditNews">
                         <label class="form-check-label" for="toEditNews">
-                          Edit News
+                          Edit All News
                         </label>
                       </div>
                       <div class="form-check">
@@ -132,7 +126,25 @@
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" formControlName="toDeleteNews" id="toDeleteNews">
                         <label class="form-check-label" for="toDeleteNews">
-                          Delete News
+                          Delete All News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toDeleteownNews" id="toDeleteNews">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Delete own News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toModifyUser" id="toModifyUser">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Modify user data
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toAddNewRoles" id="toAddNewRoles">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Add new roles
                         </label>
                       </div>
                     </div>

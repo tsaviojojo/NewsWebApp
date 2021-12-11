@@ -9,11 +9,13 @@ public class Roles {
 
     @Id
     private String roleTitle;
-    private boolean viewNews;
     private boolean createNews;
     private boolean updateNews;
     private boolean onlyUpdateOwnNews;
     private boolean deleteNews;
+    private boolean deleteOwnNews;
+    private boolean modifyUser;
+    private boolean addNewRoles;
 
     @OneToMany(mappedBy = "roles")
     private Set<User> userSet;
@@ -32,14 +34,6 @@ public class Roles {
 
     public void setRoleTitle(String roleTitle) {
         this.roleTitle = roleTitle;
-    }
-
-    public boolean isViewNews() {
-        return viewNews;
-    }
-
-    public void setViewNews(boolean viewNews) {
-        this.viewNews = viewNews;
     }
 
     public boolean isUpdateNews() {
@@ -64,5 +58,29 @@ public class Roles {
 
     public void setDeleteNews(boolean deleteNews) {
         this.deleteNews = deleteNews;
+    }
+
+    public boolean isDeleteOwnNews() {
+        return deleteOwnNews;
+    }
+
+    public void setDeleteOwnNews(boolean deleteOwnNews) {
+        this.deleteOwnNews = deleteOwnNews;
+    }
+
+    public boolean isModifyUser() {
+        return modifyUser;
+    }
+
+    public void setModifyUser(boolean modifyUser) {
+        this.modifyUser = modifyUser;
+    }
+
+    public boolean isAddNewRoles() {
+        return addNewRoles;
+    }
+
+    public void setAddNewRoles(boolean addNewRoles) {
+        this.addNewRoles = addNewRoles;
     }
 }
