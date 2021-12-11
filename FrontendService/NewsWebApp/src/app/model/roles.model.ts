@@ -1,5 +1,5 @@
 export class roles {
-    roleTitle : string = '';
+    roleTitle !: string;
     viewNews : boolean = false;
     createNews : boolean = false;
     updateNews : boolean = false;

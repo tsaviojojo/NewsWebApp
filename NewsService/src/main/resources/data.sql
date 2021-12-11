@@ -1,6 +1,3 @@
-insert into user (user_id, user_name, user_role, user_password) values (1, 'savio', 'ADMIN', '1234')
-insert into user (user_id, user_name, user_role, user_password) values (2, 'ami', 'READER', '1235')
-
 insert into roles (role_title, view_news, create_news, update_news, only_update_own_news, delete_news) values ('ADMIN',true,true,true,true,true)
 insert into roles (role_title, view_news, create_news, update_news, only_update_own_news, delete_news) values ('READER',true,false,false,false,false)
 insert into roles (role_title, view_news, create_news, update_news, only_update_own_news, delete_news) values ('PUBLISHER',true,true,false,true,false)

@@ -30,6 +30,8 @@ export class NewsDashboardComponent implements OnInit {
   showNewsEditButton : boolean = true;
   showNewsDeleteButton : boolean = true;
   showNewsAddButton : boolean = true;
+  showAddRoleButton : boolean = false;
+  showModifyUserButton : boolean = false;
 
   constructor(private formbuilder: FormBuilder,
     private api: ApiService,
@@ -38,13 +40,17 @@ export class NewsDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.userRole.getUserRole().length === 0) {
+    if(!this.userRole.getUserRole().roleTitle || this.userRole.getUserRole().roleTitle.length === 0) {
       alert("Please login to access News Dashboard")
       this.router.navigate(['login'])
     }
     this.formValue = this.formbuilder.group({
       newsTitle : [''],
-      newsContent : ['']
+      newsImage : [''],
+      newsContent : [''],
+      newsPublished : [''],
+      newsValidFrom : [''],
+      newsValidTo : [''],
     })
 
     this.roleForm = this.formbuilder.group({
@@ -56,18 +62,54 @@ export class NewsDashboardComponent implements OnInit {
       toDeleteNews : false
     })
 
-    if(this.userRole.getUserRole() === "READER"){
-      this.showNewsEditButton = false;
-      this.showNewsDeleteButton = false;
+    if(this.userRole.getUserRole().roleTitle === 'ADMIN'){
+      this.showAddRoleButton = true;
+      this.showModifyUserButton = true;
+    }
+
+    if(!this.userRole.getUserRole().createNews){
       this.showNewsAddButton = false;
     }
 
-    this.getAllNews();
+    if(!this.userRole.getUserRole().updateNews){
+      this.showNewsEditButton = false;
+    }
+
+    if(!this.userRole.getUserRole().deleteNews){
+      this.showNewsDeleteButton = false;
+    }
+
+    if(this.userRole.getUserRole().viewNews){
+      this.getAllNews();
+    }
+    
   }
 
   postNews(){
     this.newsModelObj.newsTitle = this.formValue.value.newsTitle;
     this.newsModelObj.newsContent = this.formValue.value.newsContent;
+    this.newsModelObj.newsValidFrom = this.formValue.value.newsValidFrom;
+    this.newsModelObj.newsValidTo = this.formValue.value.newsValidTo;
+    this.newsModelObj.newsAuthor = this.userRole.getUserName();
+    this.newsModelObj.newsSavedAsDraft = false;
+
+    this.api.postNews(this.newsModelObj)
+    .subscribe(res =>{
+      console.log(res);
+      let ref = document.getElementById('newsCancelButton')
+      ref?.click();
+      this.formValue.reset();
+      this.getAllNews();
+    })
+  }
+
+  postNewsAsDraft(){
+    this.newsModelObj.newsTitle = this.formValue.value.newsTitle;
+    this.newsModelObj.newsContent = this.formValue.value.newsContent;
+    this.newsModelObj.newsValidFrom = this.formValue.value.newsValidFrom;
+    this.newsModelObj.newsValidTo = this.formValue.value.newsValidTo;
+    this.newsModelObj.newsAuthor = this.userRole.getUserRole().roleTitle;
+    this.newsModelObj.newsSavedAsDraft = true;
 
     this.api.postNews(this.newsModelObj)
     .subscribe(res =>{
@@ -106,6 +148,10 @@ export class NewsDashboardComponent implements OnInit {
   updateNews(){
     this.newsModelObj.newsTitle = this.formValue.value.newsTitle;
     this.newsModelObj.newsContent = this.formValue.value.newsContent;
+    this.newsModelObj.newsValidFrom = this.formValue.value.newsValidFrom;
+    this.newsModelObj.newsValidTo = this.formValue.value.newsValidTo;
+    this.newsModelObj.newsAuthor = this.userRole.getUserRole().roleTitle;
+    this.newsModelObj.newsSavedAsDraft = false;
 
     this.api.updateNews(this.newsModelObj, this.newsId)
     .subscribe(res=>{

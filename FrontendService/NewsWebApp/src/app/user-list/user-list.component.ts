@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit(): void {
-    if(this.userRole.getUserRole().length === 0) {
+    if(!this.userRole.getUserRole().roleTitle || this.userRole.getUserRole().roleTitle.length === 0) {
       alert("Please login as admin to access Users List")
       this.router.navigate(['login'])
     }

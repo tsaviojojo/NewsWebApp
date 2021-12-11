@@ -2,6 +2,7 @@ package com.webapp.demo.model;
 
 
 import javax.persistence.*;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -15,6 +16,18 @@ public class User {
     private String userName;
     private String userRole;
     private String userPassword;
+
+    @ManyToOne
+    @JoinColumn(name="role_title")
+    private Roles roles;
+
+    public Roles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
+    }
 
     public String getUserPassword() {
         return userPassword;

@@ -3,12 +3,10 @@
 <div id="mySidebar" class="sidebar">
     <a class="closebtn" (click)="closeNav()">×</a>
     <button type="button" *ngIf="showNewsAddButton" (click)="clickAddNews()" class="btn login100-menu-btn" data-toggle="modal" data-target="#exampleModalCenter">Add News</button>
-    <button type="button"  class="btn login100-menu-btn" data-toggle="modal" data-target="#rolesModalCenter">Add Roles</button>
-    <button type="button" (click)="modifyUser()" class="btn login100-menu-btn">Modify User</button>
+    <button type="button" *ngIf="showAddRoleButton" class="btn login100-menu-btn" data-toggle="modal" data-target="#rolesModalCenter">Add Roles</button>
+    <button type="button" *ngIf="showModifyUserButton" (click)="modifyUser()" class="btn login100-menu-btn">Modify User</button>
 
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-    <button routerLink="/login" class="btn login100-menu-btn"><i class="fa fa-sign-out"></i>Logout</button>
+    <button routerLink="/login" class="btn login100-menu-btn" style="margin-top: 50px;"><i class="fa fa-sign-out"></i>Logout</button>
 </div>
 <div class="background">  
 <div id="main">
@@ -22,7 +20,7 @@
             <div class="col-md-4" *ngFor="let row of newsData" style="margin-bottom:35px; margin-top: 35px;">
 
                 <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+                    <img src="assets/images/img-01.png" alt="This news Does not have an image" height="225" preserveAspectRatio="xMidYMid slice" focusable="false">
 
                     <div class="card-body">
                         <h5 class="card-title">Title: {{row.newsTitle}}</h5>
@@ -59,7 +57,19 @@
             <div class="form-group">
                 <label for="newsTitle">News Title</label>
                 <input type="text" formControlName="newsTitle" class="form-control" id="newsTitle" placeholder="Example input">
-              </div>
+            </div>
+            <div class="form-group">
+              <label for="newsTitle">News image</label>
+              <input type="file" accept="image/*" formControlName="newsImage" class="form-control" id="newsTitle" placeholder="Example input">
+            </div>
+            <div class="form-group">
+              <label for="newsTitle">News Valid From</label>
+              <input type="date" formControlName="newsValidFrom" class="form-control" id="newsValidFrom" placeholder="Example input">
+            </div>
+            <div class="form-group">
+              <label for="newsTitle">News Valid Till</label>
+              <input type="date" formControlName="newsValidTo" class="form-control" id="newsValidTo" placeholder="Example input">
+            </div>
             <div class="form-group">
               <label for="newsContent">News Content</label>
               <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3"></textarea>
@@ -68,6 +78,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" id="newsCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" *ngIf="showAdd" (click)="postNewsAsDraft()" class="btn btn-primary">Save as Draft</button>
         <button type="button" *ngIf="showAdd" (click)="postNews()" class="btn btn-primary">Publish News</button>
         <button type="button" *ngIf="showUpdate" (click)="updateNews()" class="btn btn-primary">Update News</button>
     </div>

@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       if(user){
         this.userModelObj.userRole = user.userRole;
         this.userModelObj.userName = user.userName;
-        this.userRole.setUserRole(user.userRole);
+        this.userRole.setUserRole(user.roles, user.userName);
         this.loginForm.reset();
         this.router.navigate(['dashboard'])
       }else{

@@ -1,7 +1,9 @@
 package com.webapp.demo.controller;
 
+import com.webapp.demo.dao.RolesRepo;
 import com.webapp.demo.dao.UserRepo;
 import com.webapp.demo.model.News;
+import com.webapp.demo.model.Roles;
 import com.webapp.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,9 @@ public class UserController {
     @Autowired
     UserRepo userRepository;
 
+    @Autowired
+    RolesRepo roleRepository;
+
     @GetMapping("/user")
     public List<User> getUser() {
         return userRepository.findAll();
@@ -28,6 +33,7 @@ public class UserController {
 
     @PostMapping("/user")
     void addUser(@RequestBody User user) {
+        user.setRoles(roleRepository.findById(user.getUserRole()).orElse(new Roles()));
         userRepository.save(user);
     }
 
@@ -37,6 +43,7 @@ public class UserController {
                 .map(tempUser -> {
                     tempUser.setUserName(user.getUserName());
                     tempUser.setUserRole(user.getUserRole());
+                    tempUser.setRoles(roleRepository.findById(user.getUserRole()).orElse(new Roles()));
                     return userRepository.save(tempUser);
                 })
                 .orElseGet(() -> {

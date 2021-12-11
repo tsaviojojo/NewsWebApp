@@ -1,6 +1,7 @@
 package com.webapp.demo.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @SequenceGenerator(name="roleIdSeq", initialValue = 4)
@@ -13,6 +14,9 @@ public class Roles {
     private boolean updateNews;
     private boolean onlyUpdateOwnNews;
     private boolean deleteNews;
+
+    @OneToMany(mappedBy = "roles")
+    private Set<User> userSet;
 
     public boolean isCreateNews() {
         return createNews;
