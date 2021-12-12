@@ -3,7 +3,7 @@ package com.webapp.demo.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Date;
 
 @Entity
 public class NewsReadByUser {
@@ -23,15 +23,15 @@ public class NewsReadByUser {
     @JsonIgnore
     private News news;
 
-    private boolean isRead;
-    private String userName;
+    private Date publishedDate;
 
-    public String getUserName() {
-        return userName;
+
+    public Date getPublishedDate() {
+        return publishedDate;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPublishedDate(Date publishedDate) {
+        this.publishedDate = publishedDate;
     }
 
     public NewsReadByUserKey getId() {
@@ -58,11 +58,4 @@ public class NewsReadByUser {
         this.news = news;
     }
 
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
-    }
 }

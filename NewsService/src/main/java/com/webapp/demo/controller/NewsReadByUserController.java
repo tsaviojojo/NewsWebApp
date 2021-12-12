@@ -35,6 +35,8 @@ public class NewsReadByUserController {
 
         newsReadByUser.setId(newsReadByUserKey);
         newsReadByUser.setNews(news);
+        newsReadByUser.setPublishedDate(news.getNewsPublished());
+
         List<User> userList = userRepo.findAll();
         for(User user:userList) {
             if (user.getUserName().equals(userName)) {

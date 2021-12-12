@@ -1,0 +1,228 @@
+.background{
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+  }
+  
+  .wrap-login100 {
+    background: #fff;
+    border-radius: 10px;
+    margin-right: 5px;
+    justify-content: space-between;
+  }
+  
+  .container-login100 {
+      width: 100%;  
+      min-height: 100vh;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: #9053c7;
+      background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+      background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+      background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+      background: linear-gradient(-135deg, #c850c0, #4158d0);
+    }
+  
+    [ Button ]*/
+  .container-login100-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+  }
+  
+  .login100-form-btn {
+    font-family: Montserrat-Bold;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+  
+    margin-left: 15px;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    background: #57b846;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+  
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+  
+  .login100-menu-btn {
+      font-family: Montserrat-Bold;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #fff;
+      text-transform: uppercase;
+    
+      margin-top: 10px;
+      margin-left: 15px;
+      width: 110%;
+      height: 50px;
+      border-radius: 25px;
+      background: #9053c7;
+      background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+      background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+      background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+      background: linear-gradient(-135deg, #c850c0, #4158d0);
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 25px;
+    
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .login100-menu-btn:hover {
+      background: 
+       #9053c7;
+    }
+    
+  
+  .login100-btn {
+      font-family: Montserrat-Bold;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #fff;
+      text-transform: uppercase;
+    
+      margin-left: 15px;
+      height: 50px;
+      border-radius: 25px;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 25px;
+    
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+  
+    .login100-logout-btn {
+      font-family: Montserrat-Bold;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #fff;
+      text-transform: uppercase;
+    
+      margin-block-end: 0%;
+      margin-left: 15px;
+      height: 50px;
+      border-radius: 25px;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 25px;
+    
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+  
+  .login100-form-btn:hover {
+    background: 
+    
+    #333333;
+  }
+  
+  .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+    
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+    
+    .sidebar .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+    
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+    }
+    
+    .openbtn:hover {
+      background-color: #444;
+    }
+    
+    #main {
+      transition: margin-left .5s;
+      padding: 16px;
+    }
+  
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+      .sidebar {padding-top: 15px;}
+      .sidebar a {font-size: 18px;}
+    }

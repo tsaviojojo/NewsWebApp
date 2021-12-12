@@ -67,6 +67,13 @@ export class ApiService {
     }))
   }
 
+  getReadNews(userId:any){
+    return this.http.get<any>("http://localhost:8080/newsread/"+userId)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
   deleteNews(id : number){
     return this.http.delete<any>("http://localhost:8080/news/"+id)
     .pipe(map((res:any)=>{

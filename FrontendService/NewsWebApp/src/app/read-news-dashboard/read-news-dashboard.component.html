@@ -2,13 +2,10 @@
 
 <div id="mySidebar" class="sidebar">
     <a class="closebtn" (click)="closeNav()">×</a>
-    <button type="button" *ngIf="showNewsAddButton" (click)="clickAddNews()" class="btn login100-menu-btn" data-toggle="modal" data-target="#exampleModalCenter">Add News</button>
-    <button (click)="navigateToReadNews()" class="btn login100-menu-btn">Read News</button>
-    <button type="button" *ngIf="showAddRoleButton" class="btn login100-menu-btn" data-toggle="modal" data-target="#rolesModalCenter">Add Roles</button>
-    <button type="button" *ngIf="showModifyUserButton" (click)="modifyUser()" class="btn login100-menu-btn">Modify User</button>
-
-    <button routerLink="/login" class="btn login100-menu-btn" style="margin-top: 50px;"><i class="fa fa-sign-out"></i>Logout</button>
+    <button (click)="navigateToDashboard()" class="btn login100-menu-btn"><i class="fa fa-sign-out"></i>Dashboard</button>
+    <button routerLink="/login" class="btn login100-menu-btn"><i class="fa fa-sign-out"></i>Logout</button>
 </div>
+
 <div class="background">  
 <div id="main">
     <div class="row">

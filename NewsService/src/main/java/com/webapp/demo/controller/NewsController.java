@@ -47,6 +47,18 @@ public class NewsController {
         return newsRepository.findAllUnreadNews(userId);
     }
 
+    @GetMapping("/newsread/{userId}")
+    public List<News> getReadNews(@PathVariable("userId") String userName) {
+        List<User> userList = userRepo.findAll();
+        long userId = 0;
+        for(User user: userList){
+            if(user.getUserName().equals(userName)){
+                userId= user.getUserId();
+            }
+        }
+        return newsRepository.findAllReadNews(userId);
+    }
+
     @PostMapping("/news")
     void addNews(@RequestBody News news) {
         newsRepository.save(news);
@@ -59,8 +71,6 @@ public class NewsController {
         newsReadByUser.setNews(newsRepository.findById(newsId).orElse(new News()));
         for(User user: userList){
             newsReadByUser.setUser(user);
-            newsReadByUser.setRead(true);
-            System.out.println(user.getUserName());
             newsReadByUserRepo.delete(newsReadByUser);
         }
         newsRepository.deleteById(newsId);

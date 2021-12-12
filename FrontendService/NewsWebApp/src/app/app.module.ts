@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { DatePipe } from '@angular/common';
+import { ReadNewsDashboardComponent } from './read-news-dashboard/read-news-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DatePipe } from '@angular/common';
     NewsDashboardComponent,
     LoginComponent,
     SignupComponent,
-    UserListComponent
+    UserListComponent,
+    ReadNewsDashboardComponent
   ],
   imports: [
     BrowserModule,

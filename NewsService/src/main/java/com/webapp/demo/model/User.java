@@ -6,8 +6,8 @@ import java.util.Optional;
 import java.util.Set;
 
 @Entity
-// The 1st two are already inserted into the table using data.sql
-@SequenceGenerator(name="userIdSeq", initialValue = 3)
+// The 1st three are already inserted into the table using data.sql
+@SequenceGenerator(name="userIdSeq", initialValue = 4)
 public class User {
 
     @Id

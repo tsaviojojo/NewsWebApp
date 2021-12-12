@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../service/api.service';
 import { NewsModel } from '../model/news-dashboard.model';
@@ -9,11 +9,11 @@ import { asLiteral } from '@angular/compiler/src/render3/view/util';
 import { DatePipe } from '@angular/common'
 
 @Component({
-  selector: 'app-news-dashboard',
-  templateUrl: './news-dashboard.component.html',
-  styleUrls: ['./news-dashboard.component.css']
+  selector: 'app-read-news-dashboard',
+  templateUrl: './read-news-dashboard.component.html',
+  styleUrls: ['./read-news-dashboard.component.css']
 })
-export class NewsDashboardComponent implements OnInit {
+export class ReadNewsDashboardComponent implements OnInit {
 
   newsId !: number;
   formValue !: FormGroup;
@@ -148,8 +148,8 @@ export class NewsDashboardComponent implements OnInit {
     this.newsModelObj.newsContent = this.formValue.value.newsContent;
     this.newsModelObj.newsValidFrom = this.formValue.value.newsValidFrom;
     this.newsModelObj.newsValidTo = this.formValue.value.newsValidTo;
-    this.newsModelObj.newsAuthor = this.userRole.getUserName();
     this.newsModelObj.newsPublished = new Date();
+    this.newsModelObj.newsAuthor = this.userRole.getUserName();
     this.newsModelObj.newsSavedAsDraft = false;
 
     this.api.postNews(this.newsModelObj)
@@ -181,7 +181,7 @@ export class NewsDashboardComponent implements OnInit {
   }
 
   getAllNews(){
-    this.api.getUnreadNews(this.userRole.userName)
+    this.api.getReadNews(this.userRole.userName)
     .subscribe(res=>{
       this.newsData = res;
     })
@@ -212,12 +212,6 @@ export class NewsDashboardComponent implements OnInit {
     this.formValueNewsView.controls['newsTitle'].setValue(row.newsTitle);
     this.formValueNewsView.controls['newsContent'].setValue(row.newsContent);
     this.formValueNewsView.controls['newsPublished'].setValue(this.datepipe.transform(row.newsPublished, 'yyyy-MM-dd'));
-    this.api.postNewsRead(row, this.userRole.getUserName())
-    .subscribe(res =>{
-      let ref = document.getElementById('newsCancelButton')
-      ref?.click();
-      this.getAllNews();
-    })
   }
 
   updateNews(){
@@ -296,8 +290,9 @@ export class NewsDashboardComponent implements OnInit {
     })
 
   }
-  navigateToReadNews(){
-    this.router.navigate(['/readNews'])
+
+  navigateToDashboard(){
+    this.router.navigate(['/dashboard'])
     .then(() => {
       this.ngOnInit();
     });
