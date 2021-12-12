@@ -1,10 +1,13 @@
 package com.webapp.demo.controller;
 
+import com.webapp.demo.dao.NewsReadByUserRepo;
 import com.webapp.demo.dao.NewsRepo;
 import com.webapp.demo.dao.RolesRepo;
 import com.webapp.demo.dao.UserRepo;
 import com.webapp.demo.model.News;
+import com.webapp.demo.model.NewsReadByUser;
 import com.webapp.demo.model.Roles;
+import com.webapp.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,29 +27,25 @@ public class NewsController {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    NewsReadByUserRepo newsReadByUserRepo;
+
     @GetMapping("/news")
     public List<News> getNews() {
         return newsRepository.findAll();
     }
 
-    /*@GetMapping("/news/{userId}")
-    public List<News> getUser(@PathVariable("userId") String userId) {
-        // had to be changed.. getting userName and not userId.
-        // find the userId using userName and the role assigned to it
-        Roles roles = rolesRepo.findById(userId).orElse(new Roles());
-        List<News> newsList = new ArrayList<>();
-        if(roles.isViewNews() && roles.isUpdateNews()){
-            newsList = newsRepository.findAll();
+    @GetMapping("/news/{userId}")
+    public List<News> getNews(@PathVariable("userId") String userName) {
+        List<User> userList = userRepo.findAll();
+        long userId = 0;
+        for(User user: userList){
+            if(user.getUserName().equals(userName)){
+                userId= user.getUserId();
+            }
         }
-        if(roles.isOnlyUpdateOwnNews()){
-            // return only his news and also his saved news
-        }
-        if(roles.isViewNews() && !roles.isOnlyUpdateOwnNews() && !roles.isUpdateNews()){
-            // return all news but not the saved news
-
-        }
-        return newsList;
-    }*/
+        return newsRepository.findAllUnreadNews(userId);
+    }
 
     @PostMapping("/news")
     void addNews(@RequestBody News news) {
@@ -55,6 +54,15 @@ public class NewsController {
 
     @DeleteMapping("/news/{newsId}")
     void deleteNews(@PathVariable("newsId") long newsId) {
+        List<User> userList = userRepo.findAll();
+        NewsReadByUser newsReadByUser = new NewsReadByUser();
+        newsReadByUser.setNews(newsRepository.findById(newsId).orElse(new News()));
+        for(User user: userList){
+            newsReadByUser.setUser(user);
+            newsReadByUser.setRead(true);
+            System.out.println(user.getUserName());
+            newsReadByUserRepo.delete(newsReadByUser);
+        }
         newsRepository.deleteById(newsId);
     }
 

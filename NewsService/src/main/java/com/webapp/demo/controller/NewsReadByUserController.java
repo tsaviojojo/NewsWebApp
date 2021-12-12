@@ -45,4 +45,22 @@ public class NewsReadByUserController {
 
         newsReadByUserRepo.save(newsReadByUser);
     }
+
+    @GetMapping("/newsRead/{userName}/{newsId}")
+    public boolean getNewsReadStatus(@PathVariable("userName") String userName,@PathVariable long newsId) {
+        System.out.println(newsId);
+
+        NewsReadByUserKey newsReadByUserKey = new NewsReadByUserKey();
+        newsReadByUserKey.setNewsId(newsId);
+        List<User> userList = userRepo.findAll();
+        for(User user:userList) {
+            if (user.getUserName().equals(userName)) {
+                newsReadByUserKey.setUserId(user.getUserId());
+            }
+        }
+        if(newsReadByUserRepo.findById(newsReadByUserKey).isPresent()) {
+            return true;
+        }
+        return false;
+    }
 }

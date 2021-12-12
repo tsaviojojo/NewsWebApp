@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http'
 import {map} from 'rxjs/operators'
 import { roles } from '../model/roles.model';
+import { NewsModel } from '../model/news-dashboard.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +46,22 @@ export class ApiService {
     }))
   }
 
+  getNewsRead(newsId : any, userName : string){
+    return this.http.get<any>("http://localhost:8080/newsRead/"+userName+"/"+newsId)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
   getNews(){
     return this.http.get<any>("http://localhost:8080/news")
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
+  getUnreadNews(userId:any){
+    return this.http.get<any>("http://localhost:8080/news/"+userId)
     .pipe(map((res:any)=>{
       return res;
     }))

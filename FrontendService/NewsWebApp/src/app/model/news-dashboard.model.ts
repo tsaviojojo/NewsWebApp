@@ -1,4 +1,5 @@
 export class NewsModel {
+    newsId : any;
     newsTitle : string = '';
     newsContent : string = '';
     newsAuthor : string = '';
@@ -7,4 +8,5 @@ export class NewsModel {
     newsValidFrom : any ;
     newsValidTo : any;
     newsSavedAsDraft : boolean = false;
+    newsReadStatus : any;
 }

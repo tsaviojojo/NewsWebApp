@@ -1,5 +1,7 @@
 package com.webapp.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,14 +14,25 @@ public class NewsReadByUser {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "userId")
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @MapsId("newsId")
     @JoinColumn(name = "newsId")
+    @JsonIgnore
     private News news;
 
     private boolean isRead;
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public NewsReadByUserKey getId() {
         return id;

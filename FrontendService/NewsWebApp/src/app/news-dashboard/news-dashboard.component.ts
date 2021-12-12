@@ -28,6 +28,7 @@ export class NewsDashboardComponent implements OnInit {
 
   showAdd !: boolean;
   showUpdate !:boolean;
+  newsRead !: any;
   canAddToTable : boolean = true;
 
   showNewsCard !: boolean;
@@ -100,6 +101,7 @@ export class NewsDashboardComponent implements OnInit {
   }
 
   showNews(row : NewsModel){
+
     if(row.newsSavedAsDraft) {
       if(row.newsAuthor === this.userRole.userName) {
         return this.showNewsCard = true;
@@ -178,7 +180,7 @@ export class NewsDashboardComponent implements OnInit {
   }
 
   getAllNews(){
-    this.api.getNews()
+    this.api.getUnreadNews(this.userRole.userName)
     .subscribe(res=>{
       this.newsData = res;
     })

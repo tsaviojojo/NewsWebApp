@@ -21,7 +21,7 @@ public class News {
     @Column(columnDefinition="BOOLEAN DEFAULT false")
     private boolean newsSavedAsDraft;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     Set<NewsReadByUser> readNews;
 
     public long getNewsId() {
