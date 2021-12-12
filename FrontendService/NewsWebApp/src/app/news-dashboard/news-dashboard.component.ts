@@ -74,7 +74,9 @@ export class NewsDashboardComponent implements OnInit {
       toCreateNews : false,
       toEditNews : false,
       toEditownNews : false,
-      toDeleteNews : false
+      toDeleteNews : false,
+      toModifyUser : false,
+      toAddNewRoles : false,
     })
 
     if(this.userRole.getUserRole().addNewRoles){
