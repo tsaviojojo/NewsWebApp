@@ -64,6 +64,11 @@ public class NewsController {
         newsRepository.save(news);
     }
 
+   /* @PostMapping("/news") void addNews(@RequestParam("image") MultipartFile multipartFile) {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        System.out.println(fileName);
+    }*/
+
     @DeleteMapping("/news/{newsId}")
     void deleteNews(@PathVariable("newsId") long newsId) {
         List<User> userList = userRepo.findAll();

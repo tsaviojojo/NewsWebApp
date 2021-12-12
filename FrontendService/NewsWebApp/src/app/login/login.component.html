@@ -6,13 +6,13 @@
                 <img src="assets/images/img-01.png" alt="IMG">
             </div>
 
-            <form class="login100-form validate-form" [formGroup]="loginForm" (ngSubmit)="login()">
+            <form ngNativeValidate class="login100-form validate-form" [formGroup]="loginForm" (ngSubmit)="login()">
                 <span class="login100-form-title" style="font-family:Arial, Helvetica, sans-serif">
                     Member Login
                 </span>
 
                 <div class="wrap-input100 validate-input">
-                    <input formControlName="userName" class="input100" type="text" name="email" placeholder="User Name">
+                    <input formControlName="userName" class="input100" type="text" name="email" placeholder="User Name" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                    <input formControlName="userPassword" class="input100" type="password" name="pass" placeholder="Password">
+                    <input formControlName="userPassword" class="input100" type="password" name="pass" placeholder="Password" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
                         <i class="fa fa-lock" aria-hidden="true"></i>
