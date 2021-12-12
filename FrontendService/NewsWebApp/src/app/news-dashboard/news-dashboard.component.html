@@ -1,0 +1,197 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="mySidebar" class="sidebar">
+    <a class="closebtn" (click)="closeNav()">×</a>
+    <button type="button" *ngIf="showNewsAddButton" (click)="clickAddNews()" class="btn login100-menu-btn" data-toggle="modal" data-target="#exampleModalCenter">Add News</button>
+    <button (click)="navigateToReadNews()" class="btn login100-menu-btn">Read News</button>
+    <button type="button" *ngIf="showAddRoleButton" class="btn login100-menu-btn" data-toggle="modal" data-target="#rolesModalCenter">Add Roles</button>
+    <button type="button" *ngIf="showModifyUserButton" (click)="modifyUser()" class="btn login100-menu-btn">Modify User</button>
+
+    <button routerLink="/login" class="btn login100-menu-btn" style="margin-top: 50px;"><i class="fa fa-sign-out"></i>Logout</button>
+</div>
+<div class="background">  
+<div id="main">
+    <div class="row">
+    <button class="openbtn login100-btn" (click)="openNav()">☰ Menu</button>  
+    <h1 style="color: white; margin-left: 20px;"> Online News portal</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-4" *ngFor="let row of newsData" style="margin-bottom:35px; margin-top: 35px;">
+
+                <div class="card shadow-sm" *ngIf="showNews(row)">
+                    <img src="assets/images/news.jpeg" alt="This news Does not have an image" height="225" preserveAspectRatio="xMidYMid slice" focusable="false">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Title: {{row.newsTitle}}</h5>
+                        <p class="card-text">Content: {{row.newsContent}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">   
+                                <button (click)="onViewNews(row)" style="margin:5px;" type="button" data-toggle="modal" data-target="#newsViewModalCenter" class="btn"><i class="fa fa-caret-square-o-right"></i> View</button>                              
+                                <button (click)="onEditNews(row)" *ngIf="showNewsEdit(row)" style="margin:5px;" type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn"><i class="fa fa-edit"></i> Edit</button>
+                                <button (click)="deleteNews(row)" *ngIf="showNewsDelete(row)" style="margin:5px;" class="btn"><i class="fa fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> 
+        </div>    
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="newsViewModalCenter" tabindex="-1" role="dialog" aria-labelledby="newsViewModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 1000px;">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="newsViewModalCenterTitle">News Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <form [formGroup] ="formValueNewsView">
+            <fieldset disabled>
+              <div class="form-group">
+                  <label for="newsTitle">News Title:</label>
+                  <input type="text" formControlName="newsTitle" class="form-control" id="newsTitle" placeholder="Example input">
+              </div>
+              <div class="form-group">
+                <label for="newsPublished">News published on</label>
+                <input type="date" formControlName="newsPublished" class="form-control" id="newsValidFrom" placeholder="Example input">
+              </div>
+              <div class="form-group">
+                <label for="newsContent">News Content</label>
+                <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3"></textarea>
+              </div>
+              
+            </fieldset>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" id="newsViewCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+  </div>
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add News</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form ngNativeValidate [formGroup] ="formValue">
+            <div class="form-group">
+                <label for="newsTitle">News Title</label>
+                <input type="text" formControlName="newsTitle" class="form-control" id="newsTitle" placeholder="Example input" required>
+            </div>
+            <div class="form-group">
+              <label for="newsContent">News Content</label>
+              <textarea class="form-control" formControlName="newsContent" id="newsContent" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="newsTitle">News Valid From</label>
+              <input type="date" formControlName="newsValidFrom" class="form-control" id="newsValidFrom" placeholder="Example input">
+            </div>
+            <div class="form-group">
+              <label for="newsTitle">News Valid Till</label>
+              <input type="date" formControlName="newsValidTo" class="form-control" id="newsValidTo" placeholder="Example input">
+            </div>
+            <div class="form-group">
+              <label for="newsTitle">News image</label>
+              <input type="file" accept="image/*" formControlName="newsImage" class="form-control" id="newsTitle" placeholder="Example input">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="newsCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" *ngIf="showAdd" (click)="postNewsAsDraft()" class="btn btn-primary">Save as Draft</button>
+        <button type="button" *ngIf="showAdd" (click)="postNews()" class="btn btn-primary">Publish News</button>
+        <button type="button" *ngIf="showUpdate" (click)="updateNews()" class="btn btn-primary">Update News</button>
+    </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="rolesModalCenter" tabindex="-1" role="dialog" aria-labelledby="rolesModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Add new Role</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form ngNativeValidate [formGroup]="roleForm">
+                <div class="form-group">
+                    <label for="newsTitle">New Role Title</label>
+                    <input type="text" formControlName="roleTitle" class="form-control" id="newsTitle" placeholder="Spaces are not allowed. Will be ommited if added" required>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-10">Permitted Actions</div>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toCreateNews" id="toCreateNews">
+                        <label class="form-check-label" for="toCreateNews">
+                          Create News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toEditNews" id="toEditNews">
+                        <label class="form-check-label" for="toEditNews">
+                          Edit All News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toEditownNews" id="toEditownNews">
+                        <label class="form-check-label" for="toEditownNews">
+                          Edit own News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toDeleteNews" id="toDeleteNews">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Delete All News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toDeleteownNews" id="toDeleteNews">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Delete own News
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toModifyUser" id="toModifyUser">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Modify user data
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" formControlName="toAddNewRoles" id="toAddNewRoles">
+                        <label class="form-check-label" for="toDeleteNews">
+                          Add new roles
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="rolesCancelButton" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" (click)="addRole()" class="btn btn-primary">Add Role</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    
